@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Locale
 
 class ProductsActivity : AppCompatActivity() {
 
@@ -52,25 +53,35 @@ class ProductsActivity : AppCompatActivity() {
     private fun fetchProducts() {
         db.collection("products").get()
             .addOnSuccessListener { result ->
+                val oldSize = productList.size
                 productList.clear()
                 for (doc in result) {
                     val product = doc.toObject(Product::class.java)
                     productList.add(product)
                 }
-                adapter.notifyDataSetChanged()
-                updateCartSummary() // optional, if you want
+
+                // Efficient RecyclerView update
+                if (oldSize > 0) {
+                    adapter.notifyItemRangeRemoved(0, oldSize)
+                }
+                adapter.notifyItemRangeInserted(0, productList.size)
+
+                updateCartSummary()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load products: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Failed to load products: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 
-    // Optional: Update bottom bar cart summary
+    // Update bottom bar cart summary
     private fun updateCartSummary() {
-        // Example: simple summary (modify when cart logic implemented)
         val totalItems = productList.size
         val totalPrice = productList.sumOf { it.price }
-        cartItemsText.text = "$totalItems Items"
-        totalPriceText.text = "$${String.format("%.2f", totalPrice)}"
+        cartItemsText.text = String.format(Locale.US, "%d Items", totalItems)
+        totalPriceText.text = String.format(Locale.US, "$%.2f", totalPrice)
     }
 }
