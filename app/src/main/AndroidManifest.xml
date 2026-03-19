@@ -13,7 +13,10 @@
         android:theme="@style/Theme.Test1">
 
         <!-- Products -->
-        <activity android:name=".ProductsActivity" />
+        <activity
+            android:name=".ProductsActivity"
+            android:exported="true" />
+
 
         <!-- Register -->
         <activity android:name=".RegisterActivity" />
