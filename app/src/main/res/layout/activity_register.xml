@@ -34,30 +34,35 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/fullName"
             android:hint="Enter your full name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/email"
             android:hint="Enter your email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/phoneNumber"
             android:hint="Enter your phone number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/address"
             android:hint="Enter your address"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="12dp"/>
 
         <EditText
+            android:id="@+id/password"
             android:hint="Create a password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
@@ -71,6 +76,7 @@
             android:backgroundTint="#2F5BD3"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
+
         <TextView
             android:id="@+id/loginText"
             android:text="Already have an account? Log In"
