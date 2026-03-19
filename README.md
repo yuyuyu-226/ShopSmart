@@ -2,6 +2,8 @@
 Mobile Application 1 Final Project(Kotlin)
 # BACKEND CHANGES 03-19-2026
  - Added AuthRepository class file to handle login and registration
+   - Handles errors on db 
+   - handle password hashing via firebase auth
  - Added Ids to register layout buttons
  - Added dependencies
     - App
