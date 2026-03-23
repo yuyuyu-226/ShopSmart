@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
@@ -19,6 +20,7 @@ class ProductsActivity : AppCompatActivity() {
     private lateinit var logoutBtn: Button
     private lateinit var cartItemsText: TextView
     private lateinit var totalPriceText: TextView
+    private lateinit var swipeRefresh: SwipeRefreshLayout
     private val productList = mutableListOf<Product>()
     private lateinit var adapter: ProductAdapter
     private val db = FirebaseFirestore.getInstance()
@@ -33,11 +35,17 @@ class ProductsActivity : AppCompatActivity() {
         logoutBtn = findViewById(R.id.logoutBtn)
         cartItemsText = findViewById(R.id.cartItems)
         totalPriceText = findViewById(R.id.totalPrice)
+        swipeRefresh = findViewById(R.id.swipeRefresh)
 
         // RecyclerView setup
         adapter = ProductAdapter(productList)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        // SwipeRefresh setup
+        swipeRefresh.setOnRefreshListener {
+            fetchProducts()
+        }
 
         // Fetch products from Firestore
         fetchProducts()
@@ -78,6 +86,7 @@ class ProductsActivity : AppCompatActivity() {
                 adapter.notifyItemRangeInserted(0, productList.size)
 
                 updateCartSummary()
+                swipeRefresh.isRefreshing = false
             }
             .addOnFailureListener { e ->
                 Toast.makeText(
@@ -85,6 +94,7 @@ class ProductsActivity : AppCompatActivity() {
                     "Failed to load products: ${e.message}",
                     Toast.LENGTH_LONG
                 ).show()
+                swipeRefresh.isRefreshing = false
             }
     }
 
