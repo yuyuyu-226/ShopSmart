@@ -2,6 +2,7 @@ package com.example.test1
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -56,9 +57,19 @@ class ProductsActivity : AppCompatActivity() {
                 val oldSize = productList.size
                 productList.clear()
                 for (doc in result) {
-                    val product = doc.toObject(Product::class.java)
-                    productList.add(product)
+                    try {
+                        val product = doc.toObject(Product::class.java)
+                        productList.add(product)
+                    }catch (e: Exception){
+                        Log.e("ProductsFetchErr",e.message.toString())
+                    }
                 }
+
+                Toast.makeText(
+                    this,
+                    "Loaded: ${result.size()}",
+                    Toast.LENGTH_LONG
+                ).show()
 
                 // Efficient RecyclerView update
                 if (oldSize > 0) {
