@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="#F5F7FA">
 
     <LinearLayout
@@ -60,6 +61,14 @@
             android:backgroundTint="#2F5BD3"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/createAccountText"
