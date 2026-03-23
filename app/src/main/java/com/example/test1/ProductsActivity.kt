@@ -3,7 +3,9 @@ package com.example.test1
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +24,7 @@ class ProductsActivity : AppCompatActivity() {
     private lateinit var cartItemsText: TextView
     private lateinit var totalPriceText: TextView
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var loadingBar: ProgressBar
     private val productList = mutableListOf<Product>()
     private lateinit var adapter: ProductAdapter
     private val db = FirebaseFirestore.getInstance()
@@ -38,6 +41,7 @@ class ProductsActivity : AppCompatActivity() {
         cartItemsText = findViewById(R.id.cartItems)
         totalPriceText = findViewById(R.id.totalPrice)
         swipeRefresh = findViewById(R.id.swipeRefresh)
+        loadingBar = findViewById(R.id.loadingBar)
 
         // RecyclerView setup
         adapter = ProductAdapter(productList)
@@ -62,8 +66,12 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private fun fetchProducts() {
+        loadingBar.visibility = View.VISIBLE
+
         db.collection("products").get()
             .addOnSuccessListener { result ->
+                loadingBar.visibility = View.GONE
+
                 val oldSize = productList.size
                 productList.clear()
                 for (doc in result) {
@@ -75,12 +83,6 @@ class ProductsActivity : AppCompatActivity() {
                     }
                 }
 
-                Toast.makeText(
-                    this,
-                    "Loaded: ${result.size()}",
-                    Toast.LENGTH_LONG
-                ).show()
-
                 // Efficient RecyclerView update
                 if (oldSize > 0) {
                     adapter.notifyItemRangeRemoved(0, oldSize)
@@ -91,6 +93,7 @@ class ProductsActivity : AppCompatActivity() {
                 swipeRefresh.isRefreshing = false
             }
             .addOnFailureListener { e ->
+                loadingBar.visibility = View.GONE
                 Toast.makeText(
                     this,
                     "Failed to load products: ${e.message}",
