@@ -19,12 +19,21 @@
             android:padding="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Admin Dashboard"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#D32F2F"/>
         </LinearLayout>
 
         <!-- Welcome -->
@@ -207,11 +216,48 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/userCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 users"
+                    android:textColor="#666"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="→"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <!-- Users List (RecyclerView) -->
+        <TextView
+            android:id="@+id/usersHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Users"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/usersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"/>
+
+        <ProgressBar
+            android:id="@+id/usersLoadingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <!-- Analytics -->
         <androidx.cardview.widget.CardView

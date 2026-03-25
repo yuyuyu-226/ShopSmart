@@ -40,12 +40,13 @@ class LoginActivity : AppCompatActivity() {
 
             setLoading(true)
 
-            repository.login(email, pass) { isSuccess, error ->
+            repository.login(email, pass) { isSuccess, error, role ->
                 runOnUiThread {
                     setLoading(false)
                     if (isSuccess) {
                         Toast.makeText(this, "Logged In!", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, ProductsActivity::class.java))
+                        val destination = if (role == "admin") AdminDashboardActivity::class.java else ProductsActivity::class.java
+                        startActivity(Intent(this, destination))
                         finish()
                     } else {
                         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
@@ -55,8 +56,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         goToRegister.setOnClickListener {
-            startActivity(Intent(this, AdminDashboardActivity::class.java))
-//            startActivity(Intent(this, RegisterActivity::class.java))
+//            startActivity(Intent(this, AdminDashboardActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

@@ -9,13 +9,21 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
     // Helper to get current user
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
-    fun login(email: String, pass: String, onResult: (Boolean, String?) -> Unit) {
+    fun login(email: String, pass: String, onResult: (Boolean, String?, String?) -> Unit) {
         auth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onResult(true, null) // Success!
+                    val userId = task.result?.user?.uid ?: ""
+                    db.collection("users").document(userId).get()
+                        .addOnSuccessListener { doc ->
+                            val role = doc.getString("role") ?: "buyer"
+                            onResult(true, null, role)
+                        }
+                        .addOnFailureListener {
+                            onResult(true, null, "buyer")
+                        }
                 } else {
-                    onResult(false, task.exception?.message) // Fail with error
+                    onResult(false, task.exception?.message, null)
                 }
             }
     }
