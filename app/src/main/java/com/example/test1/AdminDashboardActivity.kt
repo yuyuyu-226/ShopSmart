@@ -52,7 +52,9 @@ class AdminDashboardActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        userAdapter = UserAdapter(userList)
+        userAdapter = UserAdapter(userList) { user, position ->
+            deleteUser(user, position)
+        }
         usersRecyclerView.layoutManager = LinearLayoutManager(this)
         usersRecyclerView.adapter = userAdapter
     }
@@ -106,6 +108,7 @@ class AdminDashboardActivity : AppCompatActivity() {
                 usersLoadingBar.visibility = View.GONE
                 for (doc in result) {
                     val user = doc.toObject(User::class.java)
+                    user.id = doc.id
                     userList.add(user)
                 }
                 userAdapter.notifyDataSetChanged()
@@ -114,6 +117,19 @@ class AdminDashboardActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 usersLoadingBar.visibility = View.GONE
                 Toast.makeText(this, "Failed to load users: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    private fun deleteUser(user: User, position: Int) {
+        db.collection("users").document(user.id).delete()
+            .addOnSuccessListener {
+                userList.removeAt(position)
+                userAdapter.notifyItemRemoved(position)
+                userCount.text = "${userList.size} users"
+                Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to delete: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

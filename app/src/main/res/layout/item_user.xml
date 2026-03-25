@@ -56,5 +56,14 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:background="#E0E0E0"/>
+
+        <ImageButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="Delete User"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
