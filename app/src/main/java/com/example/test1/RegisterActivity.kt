@@ -21,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         val nameField = findViewById<EditText>(R.id.fullName)
         val emailField = findViewById<EditText>(R.id.email)
         val passField = findViewById<EditText>(R.id.password)
-        val phoneField = findViewById<EditText>(R.id.phoneNumber)
+        val addressField = findViewById<EditText>(R.id.address)
 
 
         // Register → Login
@@ -29,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
             val name = nameField.text.toString().trim()
             val email = emailField.text.toString().trim()
             val pass = passField.text.toString().trim()
-            val phone = phoneField.text.toString().trim()
+            val address = addressField.text.toString().trim()
 
             // Basic validation to prevent empty calls to Firebase
             if (email.isEmpty() || pass.isEmpty()) {
@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            repository.registerUser(name, email, pass, phone) { success, error ->
+            repository.registerUser(name, email, pass, address) { success, error ->
                 // CRITICAL: Move back to the Main Thread for UI updates
                 runOnUiThread {
                     if (success) {

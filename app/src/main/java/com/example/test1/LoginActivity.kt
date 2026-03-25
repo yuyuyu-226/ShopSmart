@@ -55,7 +55,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         goToRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            startActivity(Intent(this, AdminDashboardActivity::class.java))
+//            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

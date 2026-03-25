@@ -20,7 +20,7 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
             }
     }
 
-    fun registerUser(fullName: String, email: String, pass: String, phone: String,  onResult: (Boolean, String?) -> Unit) {
+    fun registerUser(fullName: String, email: String, pass: String, address: String,  onResult: (Boolean, String?) -> Unit) {
         // Step 1: Create the Auth Account
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
@@ -33,7 +33,7 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
                         "first_name" to fullName,           // Placeholder for now
                         "last_name" to "",                  // TBA
                         "email" to email,                   // Unique by Auth design
-                        "phone_number" to phone,               // TBA
+                        "address" to address,
                         "role" to "buyer",                  // Default role
                         "profile_image" to "",              // TBA
                         "created_at" to FieldValue.serverTimestamp(),
