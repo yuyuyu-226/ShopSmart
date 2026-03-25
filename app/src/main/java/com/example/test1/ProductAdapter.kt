@@ -3,7 +3,7 @@ package com.example.test1
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,8 +15,8 @@ class ProductAdapter(private val productList: List<Product>) :
         val category = view.findViewById<TextView>(R.id.productCategory)
         val price = view.findViewById<TextView>(R.id.productPrice)
         val quantity = view.findViewById<TextView>(R.id.quantity)
-        val plus = view.findViewById<Button>(R.id.btnPlus)
-        val minus = view.findViewById<Button>(R.id.btnMinus)
+        val plus = view.findViewById<ImageButton>(R.id.btnPlus)
+        val minus = view.findViewById<ImageButton>(R.id.btnMinus)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
