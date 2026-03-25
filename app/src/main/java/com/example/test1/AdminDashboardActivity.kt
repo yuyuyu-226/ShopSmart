@@ -24,6 +24,8 @@ class AdminDashboardActivity : AppCompatActivity() {
     private lateinit var usersRecyclerView: RecyclerView
     private lateinit var usersLoadingBar: ProgressBar
     private lateinit var logoutBtn: Button
+    private lateinit var statsUsers: TextView
+    private lateinit var statsProducts: TextView
 
     private val userList = mutableListOf<User>()
     private lateinit var userAdapter: UserAdapter
@@ -38,6 +40,21 @@ class AdminDashboardActivity : AppCompatActivity() {
         initViews()
         setupRecyclerView()
         setupClicks()
+        fetchStats()
+    }
+
+    private fun fetchStats() {
+        db.collection("users").get()
+            .addOnSuccessListener { result ->
+                val count = result.size()
+                statsUsers.text = count.toString()
+                userCount.text = "$count users"
+            }
+
+        db.collection("products").get()
+            .addOnSuccessListener { result ->
+                statsProducts.text = result.size().toString()
+            }
     }
 
     private fun initViews() {
@@ -49,6 +66,8 @@ class AdminDashboardActivity : AppCompatActivity() {
         usersRecyclerView = findViewById(R.id.usersRecyclerView)
         usersLoadingBar = findViewById(R.id.usersLoadingBar)
         logoutBtn = findViewById(R.id.logoutBtn)
+        statsUsers = findViewById(R.id.statsUsers)
+        statsProducts = findViewById(R.id.statsProducts)
     }
 
     private fun setupRecyclerView() {
@@ -112,7 +131,9 @@ class AdminDashboardActivity : AppCompatActivity() {
                     userList.add(user)
                 }
                 userAdapter.notifyDataSetChanged()
-                userCount.text = "${userList.size} users"
+                val count = userList.size
+                userCount.text = "$count users"
+                statsUsers.text = count.toString()
             }
             .addOnFailureListener { e ->
                 usersLoadingBar.visibility = View.GONE
@@ -121,11 +142,18 @@ class AdminDashboardActivity : AppCompatActivity() {
     }
 
     private fun deleteUser(user: User, position: Int) {
+        if (user.id.isEmpty()) {
+            Toast.makeText(this, "Error: User ID not found", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
         db.collection("users").document(user.id).delete()
             .addOnSuccessListener {
                 userList.removeAt(position)
                 userAdapter.notifyItemRemoved(position)
-                userCount.text = "${userList.size} users"
+                val newCount = userList.size
+                userCount.text = "$newCount users"
+                statsUsers.text = newCount.toString()
                 Toast.makeText(this, "User deleted", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
