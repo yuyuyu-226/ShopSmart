@@ -72,16 +72,12 @@
                         android:layout_height="wrap_content"
                         android:text="Total Users"/>
                     <TextView
+                        android:id="@+id/statsUsers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1,234"
+                        android:text="0"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+12.5%"
-                        android:textColor="#4CAF50"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -104,80 +100,12 @@
                         android:layout_height="wrap_content"
                         android:text="Total Products"/>
                     <TextView
+                        android:id="@+id/statsProducts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="567"
+                        android:text="0"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+8.2%"
-                        android:textColor="#4CAF50"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Revenue -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="12dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Revenue"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$45,678"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+23.1%"
-                        android:textColor="#4CAF50"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Growth -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="140dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="12dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Growth"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="34.5%"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+5.4%"
-                        android:textColor="#4CAF50"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
